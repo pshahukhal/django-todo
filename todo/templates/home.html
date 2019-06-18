@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}To-Do List{% endblock %}
+{% block content %}
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert alert-warning alert-dismissable" role="alert">
+				<button class="close" data-dismiss="alert">
+					<small><sup>x</sup></small>
+				</button>
+				{{ message }}
+			</div>
+		{% endfor%}
+
+	{% endif %}
+
+	{% if all_items %}
+	<table class="table table-bordered">
+		{% for items in all_items %}
+			{% if items.completed %}
+				<tr class="table-secondary">
+					<td ><a href="{% url 'edit' items.id %}">{{ items.title }}</a></td> 
+					<td><center><a href="{% url 'mark_off' items.id %}">Mark incomplete </a></center></td>
+					<td><center><a href="{% url 'delete' items.id %}">Delete</a></center></td>
+				</tr>
+			{% else %}
+				<tr>
+					<td><a href="{% url 'edit' items.id %}">{{ items.title }}</a></td> 
+					<td><center><a href="{% url 'mark_on' items.id %}">Mark completed</a></center></td>
+					<td><center><a href="{% url 'delete' items.id %}">Delete</a></center></td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+		<tr class="table table-primary">
+			<td></td>
+			<td><center><a href="{% url 'mark_all_on' %}">Mark all completed </a></center></td>
+			<td><center><a href="{% url 'mark_all_off' %}">Mark all incomplete </a></center></td>
+		</tr>
+	</table>
+	
+	
+	{% endif %}
+
+{% endblock %}
